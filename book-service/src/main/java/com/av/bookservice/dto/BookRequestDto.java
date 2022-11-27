@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class BookRequestDto {
     private String name;
+    private String bookCode;
     private String author;
     private String genre;
     private String description;

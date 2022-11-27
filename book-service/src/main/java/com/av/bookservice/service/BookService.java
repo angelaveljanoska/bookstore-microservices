@@ -21,7 +21,7 @@ public class BookService {
     }
 
     public void addBook(BookRequestDto bookRequestDto) {
-        Book book = Book.builder().name(bookRequestDto.getName()).author(bookRequestDto.getAuthor()).genre(bookRequestDto.getGenre()).description(bookRequestDto.getDescription()).price(bookRequestDto.getPrice()).build();
+        Book book = Book.builder().bookCode(bookRequestDto.getBookCode()).name(bookRequestDto.getName()).author(bookRequestDto.getAuthor()).genre(bookRequestDto.getGenre()).description(bookRequestDto.getDescription()).price(bookRequestDto.getPrice()).build();
         bookRepository.save(book);
         log.info("The book {} is added to the database.", book.getId());
     }
@@ -33,6 +33,6 @@ public class BookService {
 
 
     public BookResponseDto toBookResponse(Book book) {
-        return BookResponseDto.builder().id(book.getId()).name(book.getName()).author(book.getAuthor()).genre(book.getGenre()).description(book.getDescription()).price(book.getPrice()).build();
+        return BookResponseDto.builder().id(book.getId()).bookCode(book.getBookCode()).name(book.getName()).author(book.getAuthor()).genre(book.getGenre()).description(book.getDescription()).price(book.getPrice()).build();
     }
 }
