@@ -30,7 +30,7 @@ public class BookService {
         Book savedBook = bookRepository.save(book);
         StockRequestDto stockRequest = new StockRequestDto(savedBook.getBookCode(), savedBook.getPrice(), bookRequestDto.getInitialQuantity());
         webClientBuilder.build().post().uri("http://stock-service/api/stock")
-                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
                 .body(BodyInserters.fromObject(stockRequest))
                 .exchange()
                 .block();
