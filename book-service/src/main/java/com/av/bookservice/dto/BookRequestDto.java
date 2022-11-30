@@ -18,4 +18,5 @@ public class BookRequestDto {
     private String genre;
     private String description;
     private BigDecimal price;
+    private int initialQuantity;
 }

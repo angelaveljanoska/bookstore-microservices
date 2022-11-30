@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class StockResponseDto {
+    private Long stockId;
     private String bookCode;
     private boolean isInStock;
 }

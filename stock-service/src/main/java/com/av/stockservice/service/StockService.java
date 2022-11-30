@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -20,6 +21,10 @@ public class StockService {
 
     public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
+    }
+
+    public Stock createStock(Stock stock) {
+        return stockRepository.save(stock);
     }
 
     @Transactional(readOnly = true)
@@ -37,8 +42,24 @@ public class StockService {
         }
         List<StockResponseDto> stocksList = new ArrayList<>();
         for (int i = 0; i < quantities.size(); i++) {
-            stocksList.add(StockResponseDto.builder().bookCode(codes.get(i)).isInStock(stock.get(i).getQuantity() >= quantities.get(i)).build());
+            stocksList.add(StockResponseDto.builder().stockId(stock.get(i).getId()).bookCode(codes.get(i)).isInStock(stock.get(i).getQuantity() >= quantities.get(i)).build());
         }
         return stocksList;
+    }
+
+    public void updateStock(List<Long> stockIds, List<Integer> counts, Boolean increase) {
+        if (stockIds.size() != counts.size()) {
+            throw new RuntimeException("Stock parameters are invalid!");
+        }
+        for (int i = 0; i < stockIds.size(); i++) {
+            Long stockId = stockIds.get(i);
+            Integer count = counts.get(i);
+            Stock stock = stockRepository.findById(stockId).orElseThrow(() -> new RuntimeException("Cannot find stock with ID " + stockId + "!"));
+            if (!increase && stock.getQuantity() < count) {
+                throw new RuntimeException("End quantity cannot be negative!");
+            }
+            stock.setQuantity(increase ? stock.getQuantity() + count : stock.getQuantity() - count);
+            stockRepository.save(stock);
+        }
     }
 }

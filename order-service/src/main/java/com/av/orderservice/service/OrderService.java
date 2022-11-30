@@ -11,6 +11,7 @@ import com.av.orderservice.repository.OrderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
+import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -47,6 +48,13 @@ public class OrderService {
             if (validOrder) {
                 orderRepository.save(order);
                 kafkaTemplate.send("notificationTopic", new OrderCreatedEvent(order.getId()));
+                // updateStock with http
+                webClientBuilder.build().put().uri("http://stock-service/api/stock",
+                        uriBuilder -> uriBuilder
+                                .queryParam("stockIds", stockStatus.stream().map(StockResponseDto::getStockId))
+                                .queryParam("counts", itemQuantities)
+                                .queryParam("increase", false)
+                                .build());
                 return "Success!";
             } else {
                 String unavailableBooks = stockStatus.stream().filter(stock -> !stock.isInStock()).reduce("", (curr, acc) -> acc + " " + curr, (a, b) -> (a + b));
