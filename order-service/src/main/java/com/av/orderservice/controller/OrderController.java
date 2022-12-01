@@ -39,6 +39,6 @@ public class OrderController {
     }
 
     public CompletableFuture<String> fallbackMethod(OrderRequestDto orderRequestDto, RuntimeException runtimeException) {
-        return CompletableFuture.supplyAsync(() -> "Something went wrong! Please try again later.");
+        return CompletableFuture.supplyAsync(() -> "Something went wrong! Please try again later: " + runtimeException.getMessage());
     }
 }

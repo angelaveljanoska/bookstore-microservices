@@ -6,13 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name="order_of_books")
+@Table(name = "order_of_books")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter@Setter
+@Getter
+@Setter
 public class Order {
 
     @Id
@@ -21,4 +23,6 @@ public class Order {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Item> items;
+
+    private BigDecimal totalPrice;
 }

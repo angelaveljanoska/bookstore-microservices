@@ -49,16 +49,19 @@ public class StockService {
 
     public void updateStock(List<Long> stockIds, List<Integer> counts, Boolean increase) {
         if (stockIds.size() != counts.size()) {
+            log.info("Invalid stock params!");
             throw new RuntimeException("Stock parameters are invalid!");
         }
         for (int i = 0; i < stockIds.size(); i++) {
             Long stockId = stockIds.get(i);
             Integer count = counts.get(i);
             Stock stock = stockRepository.findById(stockId).orElseThrow(() -> new RuntimeException("Cannot find stock with ID " + stockId + "!"));
+            log.info("Stock count is {}", stock.getQuantity());
             if (!increase && stock.getQuantity() < count) {
                 throw new RuntimeException("End quantity cannot be negative!");
             }
             stock.setQuantity(increase ? stock.getQuantity() + count : stock.getQuantity() - count);
+            log.info("Updated stock count, new quantity is {}", stock.getQuantity());
             stockRepository.save(stock);
         }
     }

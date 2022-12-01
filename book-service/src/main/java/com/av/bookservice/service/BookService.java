@@ -1,17 +1,22 @@
 package com.av.bookservice.service;
 
+import com.av.bookservice.dto.BookPricesResponseDto;
 import com.av.bookservice.dto.BookRequestDto;
 import com.av.bookservice.dto.BookResponseDto;
 import com.av.bookservice.dto.StockRequestDto;
 import com.av.bookservice.model.Book;
 import com.av.bookservice.repository.BookRepository;
+import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -40,6 +45,10 @@ public class BookService {
     public List<BookResponseDto> getBooks() {
         List<Book> books = bookRepository.findAll();
         return books.stream().map(this::toBookResponse).toList();
+    }
+
+    public List<BookPricesResponseDto> getBookPricesByBookCodes(List<String> bookCodes) {
+        return bookRepository.findBookByBookCodeIn(bookCodes).stream().map(it -> new BookPricesResponseDto(it.getBookCode(), it.getPrice())).toList();
     }
 
 

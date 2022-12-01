@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Data
@@ -15,4 +16,5 @@ import java.util.List;
 public class OrderResponseDto {
     private Long id;
     private List<Item> items;
+    private BigDecimal totalPrice;
 }

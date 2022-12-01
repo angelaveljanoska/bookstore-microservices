@@ -3,6 +3,7 @@ package com.av.stockservice.controller;
 import com.av.stockservice.dto.StockResponseDto;
 import com.av.stockservice.model.Stock;
 import com.av.stockservice.service.StockService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/stock")
+@Slf4j
 public class StockController {
 
     private final StockService stockService;
@@ -28,6 +30,7 @@ public class StockController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<HttpStatus> updateStock(@RequestParam List<Long> stockIds, @RequestParam List<Integer> counts, @RequestParam Boolean increase) {
+        log.info("Updating stock, array lengths are: {} {}", stockIds.size(), counts.size());
         stockService.updateStock(stockIds, counts, increase);
         return new ResponseEntity<>(HttpStatus.OK);
     }

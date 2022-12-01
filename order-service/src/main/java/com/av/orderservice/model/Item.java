@@ -9,10 +9,11 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="order_item")
+@Table(name = "order_item")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter@Setter
+@Getter
+@Setter
 public class Item {
 
     @Id
@@ -20,6 +21,5 @@ public class Item {
     private Long id;
 
     private String bookCode;
-    private BigDecimal price;
     private int quantity;
 }

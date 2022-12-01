@@ -1,15 +1,19 @@
 package com.av.orderservice.dto;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemDto {
+public class BookPricesResponseDto {
     private String bookCode;
-    private int quantity;
+    private BigDecimal price;
 }
