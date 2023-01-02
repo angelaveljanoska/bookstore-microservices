@@ -159,7 +159,7 @@ services:
       - discovery-server
       - api-gateway
 
-    # Order-Service Docker Compose Config
+  ## Order-Service Docker Compose Config
   order-service:
     container_name: order-service
     image: angelaveljanoska99/order-service:latest

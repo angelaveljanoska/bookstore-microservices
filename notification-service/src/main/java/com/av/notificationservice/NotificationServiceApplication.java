@@ -17,7 +17,7 @@ public class NotificationServiceApplication {
 
     @KafkaListener(topics = "notificationTopic")
     public void handleNotification(OrderCreatedEvent orderCreatedEvent) {
-        // here we would send out an email notification
+        // место за испраќање на email при успешна креација на нарачка
         log.info("Received Notification for Order - {}", orderCreatedEvent.getOrderNumber());
     }
 
